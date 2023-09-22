@@ -1,0 +1,136 @@
+<!documentTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" name="viewport">
+<title>GAME</title>
+<style type="text/css">
+body {text-align:center;}
+canvas { border:5px solid #ccc; }
+h1 { padding-bottom: 25px;font-size:50px; text-align: center; margin: 0;}
+</style>
+<script type="text/javascript">
+function play_game()
+{
+var lvl = 160;
+var rectwidth = 45;
+var rectangleh = 30;
+var iscore = 50;
+var sap_color = "red";
+var ct;
+var t = [];
+var xdirection = [-1, 0, 1, 0];
+var ydirection = [0, -1, 0, 1];
+var line = [];
+var khanapina = 1;
+var naksha = [];
+var mathrand = Math.random;
+var X = 5 + (mathrand() * (rectwidth - 10))|0;
+var Y = 5 + (mathrand() * (rectangleh - 10))|0;
+var disha = mathrand() * 3 | 0;
+var interval = 0;
+var score = 0;
+var summision = 0, easy = 0;
+var i, dihsanirdesh;
+var ccc = document.getElementById('khelkamaidan');
+ct = ccc.getContext('2d');
+for (i = 0; i < rectwidth; i++)
+{
+naksha[i] = [];
+}
+function rand_frog()
+{
+var x, y;
+do
+{
+x = mathrand() * rectwidth|0;
+y = mathrand() * rectangleh|0;
+}
+while (naksha[x][y]);
+naksha[x][y] = 1;
+ct.fillStyle = sap_color;
+ct.strokeRect(x * 10+1, y * 10+1, 8, 8);
+}
+rand_frog();
+function set_game_speed()
+{
+if (easy)
+{
+X = (X+rectwidth)%rectwidth;
+Y = (Y+rectangleh)%rectangleh;
+}
+--iscore;
+if (t.length)
+{
+dihsanirdesh = t.pop();
+if ((dihsanirdesh % 2) !== (disha % 2))
+{
+disha = dihsanirdesh;
+}
+}
+if ((easy || (0 <= X && 0 <= Y && X < rectwidth && Y < rectangleh)) && 2 !== naksha[X][Y])
+{
+if (1 === naksha[X][Y])
+{
+score+= Math.max(5, iscore);
+iscore = 50;
+rand_frog();
+khanapina++;
+}
+ct.fillRect(X * 10, Y * 10, 9, 9);
+naksha[X][Y] = 2;
+line.unshift([X, Y]);
+X+= xdirection[disha];
+Y+= ydirection[disha];
+if (khanapina < line.length)
+{
+dihsanirdesh = line.pop()
+naksha[dihsanirdesh[0]][dihsanirdesh[1]] = 0;
+ct.clearRect(dihsanirdesh[0] * 10, dihsanirdesh[1] * 10, 10, 10);
+}
+}
+else if (!t.length)
+{
+var msg_score = document.getElementById("msg");
+msg_score.innerHTML = "GAME .<br /> you score : <b>"+score+"</b><br>www.Lakshsingh.com<br /><br /><input type='button' value='PLAY AGAIN ' onclick='window.location.reload();' style='background-color:forestgreen;color:white'/>";
+document.getElementById("khelkamaidan").style.display = 'none';
+window.clearInterval(interval);
+}
+}
+interval = window.setInterval(set_game_speed, lvl);
+document.onkeydown = function(e) {
+var code = e.keyCode - 37;
+if (0 <= code && code < 4 && code !== t[0])
+{
+t.unshift(code);
+}
+else if (-5 == code)
+{
+if (interval)
+{
+window.clearInterval(interval);
+interval = 0;
+}
+else
+{
+interval = window.setInterval(set_game_speed, 60);
+}
+}
+else
+{
+dihsanirdesh = summision + code;
+if (dihsanirdesh == 44||dihsanirdesh==94||dihsanirdesh==126||dihsanirdesh==171) {
+summision+= code
+} else if (dihsanirdesh === 218) easy = 1;
+}
+}
+}
+</script>
+</head>
+<body onload="play_game()">
+<h1>GAME</h1>
+<div id="msg"></div>
+<canvas id="khelkamaidan" width="450" height="300">LAKSH  </canvas>
+</body>
+</html>
+  
